@@ -34,7 +34,7 @@ const UserController = () => {
             }
         userData.password = await bcrypt.hash(body.password, salt)
         try {
-            const user = new User.create(userData)
+            const user = await User.create(userData)
             let { password, ...savedData } = user._doc
             return res.status(201).json({
                 status: true,
@@ -57,17 +57,18 @@ const UserController = () => {
         try {
             let { email, password } = req.body
             const user = await User.findOne({ email: email })
-            console.log(user)
             let verifyPassword = await bcrypt.compare(password, user.password)
-            console.log(verifyPassword)
             if (user && verifyPassword) {
                 let salt = await bcrypt.genSalt(10),
                     accessToken = await bcrypt.hash(user.email, salt),
-                    { password, ...userData } = user._doc
+                    { password, ...userData } = user._doc,
+                    randString = Math.random().toString(),
+                    token = accessToken + '-' + user.id + randString
+                console.log(user._doc)
                 return res.status(200).json({
                     status: true,
                     message: 'Login successful',
-                    data: { ...userData, accessToken: accessToken + '-' + user.id }
+                    data: { ...userData, accessToken: token }
                 })
             } else {
                 return res.status(401).json({
@@ -163,7 +164,7 @@ const UserController = () => {
                         address: body.address
                     }
                 userData.password = await bcrypt.hash(body.password, salt)
-                const user = await user.create(userData)
+                const user = await User.create(userData)
                 let { password, ...savedData } = user._doc
                 return res.status(200).json({
                     status: true,

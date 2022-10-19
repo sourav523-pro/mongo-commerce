@@ -6,7 +6,7 @@ const UserAuth = async (req, res, next) => {
         return res.status(401).json({ message: 'Missing Authorization Header' })
     }
     // verify auth credentials
-    let [accessToken, id] = req.headers.authorization.replace('Bearer ', '').split('-')
+    let [token, id, salt] = paramsreq.headers.authorization.replace('Bearer ', '').split('-')
     let user = await User.findById(id),
         userData = user ? { ...user._doc, id: id } : null
     if (user && userData.role === 'user') {

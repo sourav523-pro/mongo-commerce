@@ -1,9 +1,11 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
+import Inventory from './Inventory.js'
+const { Schema, model } = mongoose
 
-const ProductVariantSchema = new mongoose.Schema({
+const ProductVariantSchema = new Schema({
     productId: {
-        type: String,
-        trim: true,
+        type: Schema.Types.ObjectId,
+        ref: "Products",
         required: [true, 'Please give product ID.']
     },
     title: {
@@ -12,14 +14,18 @@ const ProductVariantSchema = new mongoose.Schema({
         required: [true, 'Please give your title']
     },
     price: {
-        type: String,
+        type: Number,
         trim: true,
         required: [true, 'Please give a price']
     },
     cost: {
-        type: String,
+        type: Number,
         trim: true,
         required: [true, 'Please give a cost']
+    },
+    currency: {
+        type: String,
+        default: 'USD'
     },
     sku: {
         type: String,
@@ -38,22 +44,22 @@ const ProductVariantSchema = new mongoose.Schema({
         type: Number,
     },
     weight: {
-        type: String,
+        type: Number,
     },
     weightUnit: {
         type: String,
         trim: true,
     },
     height: {
-        type: String,
+        type: Number,
         trim: true,
     },
     weight: {
-        type: String,
+        type: Number,
         trim: true,
     },
     depth: {
-        type: String,
+        type: Number,
         trim: true,
     },
     size: {
@@ -71,9 +77,14 @@ const ProductVariantSchema = new mongoose.Schema({
     status: {
         type: String,
         enum: ['active', 'inactive']
+    },
+    inventory: {
+        type: Schema.Types.ObjectId,
+        ref: 'Inventories'
     }
 }, {
     timestamps: true
 })
 
-export default mongoose.model('ProductVariants', ProductVariantSchema)
+const ProductVariant = model('ProductVariants', ProductVariantSchema)
+export default ProductVariant

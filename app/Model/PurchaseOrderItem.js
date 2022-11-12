@@ -1,28 +1,30 @@
-import mongoose from "mongoose";
-
-const PurchaseOrderItemSchema = new mongoose.Schema({
+import mongoose from "mongoose"
+const { Schema, model } = mongoose
+const PurchaseOrderItemSchema = new Schema({
     orderId: {
-        type: String,
-        trim: true,
-        required: [true, 'Please give a order id']
+        type: Schema.Types.ObjectId,
+        ref: "Orders",
+        required: [true, 'Please give a order ID']
     },
     productId: {
-        type: String,
-        trim: true,
-        required: [true, 'Please give a product id']
+        type: Schema.Types.ObjectId,
+        ref: "Products",
+        required: [true, 'Please give a product ID']
     },
     sku: {
         type: String,
         required: [true, 'Please give a sku']
     },
     quantity: {
-        type: String
+        type: Number,
+        required: [true, 'Please give a quantity']
     },
     price: {
-        type: String
+        type: Number
     },
 }, {
     timestamps: true
 })
 
-export default mongoose.model('PurchaseOrderItems', PurchaseOrderItemSchema)
+const PurchaseOrderItem = model('PurchaseOrderItems', PurchaseOrderItemSchema)
+export default PurchaseOrderItem

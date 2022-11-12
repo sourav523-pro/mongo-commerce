@@ -1,14 +1,14 @@
-import mongoose from "mongoose";
-
-const SalesOrderItemSchema = new mongoose.Schema({
+import mongoose from "mongoose"
+const { Schema, model } = mongoose
+const SalesOrderItemSchema = new Schema({
     orderId: {
-        type: String,
-        trim: true,
+        type: Schema.Types.ObjectId,
+        ref: "SalesOrders",
         required: [true, 'Please give a order id']
     },
     productId: {
-        type: String,
-        trim: true,
+        type: Schema.Types.ObjectId,
+        ref: "Products",
         required: [true, 'Please give a product id']
     },
     sku: {
@@ -25,4 +25,6 @@ const SalesOrderItemSchema = new mongoose.Schema({
     timestamps: true
 })
 
-export default mongoose.model('SalesOrderItems', SalesOrderItemSchema)
+const SalesOrderItem = model('SalesOrderItems', SalesOrderItemSchema)
+
+export default SalesOrderItem

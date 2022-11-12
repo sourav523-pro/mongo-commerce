@@ -1,14 +1,28 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
+const { Schema, model } = mongoose
 
-const ProductSchema = new mongoose.Schema({
+const ProductImageSchema = new Schema({
+    name: { type: String },
+    image: { type: String },
+    order: { type: Number }
+})
+const ProductMetaSchema = new Schema({
+    key: { type: String },
+    value: { type: String }
+})
+const ProductSchema = new Schema({
     userId: {
-        type: String,
-        trim: true,
+        type: Schema.Types.ObjectId,
+        ref: "Users",
         required: [true, 'Please give your name']
     },
-    code: {
+    slug: {
         type: String,
         trim: true
+    },
+    body_html: {
+        type: String,
+        trim: true,
     },
     title: {
         type: String,
@@ -23,11 +37,11 @@ const ProductSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
-    category: {
-        type: Array,
-        default: []
-    },
-    gst: {
+    categories: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Categories',
+    }],
+    tax: {
         type: Number,
         default: 0,
         required: [true, 'Please give gst value']
@@ -35,9 +49,15 @@ const ProductSchema = new mongoose.Schema({
     status: {
         type: String,
         enum: ['active', 'inactive']
-    }
+    },
+    images: [ProductImageSchema],
+    product_meta: [ProductMetaSchema],
+    variants: [{
+        type: Schema.Types.ObjectId,
+        ref: "ProductVariants"
+    }]
 }, {
     timestamps: true
 })
-
-export default mongoose.model('Products', ProductSchema)
+const Product = model('Products', ProductSchema)
+export default Product

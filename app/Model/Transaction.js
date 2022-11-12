@@ -1,9 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
+const { Schema, model } = mongoose
 
-const TransactionsSchema = new mongoose.Schema({
+const TransactionSchema = new Schema({
     userId: {
-        type: String,
-        trim: true,
+        type: Schema.Types.ObjectId,
+        ref: "Users",
         required: [true, 'Please give a user id']
     },
     amount: {
@@ -26,4 +27,5 @@ const TransactionsSchema = new mongoose.Schema({
     timestamps: true
 })
 
-export default mongoose.model('Transactions', TransactionsSchema)
+const Transaction = model('Transactions', TransactionSchema)
+export default Transaction

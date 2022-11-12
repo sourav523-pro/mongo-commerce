@@ -1,6 +1,7 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
+const { Schema, model } = mongoose
 
-const UnitSchema = new mongoose.Schema({
+const UnitSchema = new Schema({
     unit: {
         type: String,
         trim: true,
@@ -15,4 +16,6 @@ const UnitSchema = new mongoose.Schema({
     timestamps: true
 })
 
-export default mongoose.model('Units', UnitSchema)
+const Unit = model('Units', UnitSchema)
+
+export default Unit

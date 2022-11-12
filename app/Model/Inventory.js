@@ -1,14 +1,14 @@
-import mongoose from "mongoose";
-
-const InventorySchema = new mongoose.Schema({
+import mongoose from "mongoose"
+const { Schema, model } = mongoose
+const InventorySchema = new Schema({
     productId: {
-        type: String,
-        trim: true,
+        type: Schema.Types.ObjectId,
+        ref: "Products",
         required: [true, "Please give a product ID"]
     },
     variantId: {
-        type: String,
-        trim: true,
+        type: Schema.Types.ObjectId,
+        ref: "ProductVariants",
         required: [true, "Please give a variant ID"]
     },
     sku: {
@@ -17,31 +17,31 @@ const InventorySchema = new mongoose.Schema({
         required: [true, "Please give a SKU"]
     },
     starting: {
-        type: String,
+        type: Number,
         default: 0
     },
     sales: {
-        type: String,
+        type: Number,
         default: 0
     },
     purchase: {
-        type: String,
+        type: Number,
         default: 0
     },
     prevStock: {
-        type: String,
+        type: Number,
         default: 0
     },
     available: {
-        type: String,
+        type: Number,
         default: 0
     },
     allocated: {
-        type: String,
+        type: Number,
         default: 0
     },
     onhand: {
-        type: String,
+        type: Number,
         default: 0
     },
     inventoryUnit: {
@@ -51,5 +51,5 @@ const InventorySchema = new mongoose.Schema({
 }, {
     timestamps: true
 })
-
-export default mongoose.model('Inventories', InventorySchema)
+const Inventory = model('Inventories', InventorySchema)
+export default Inventory

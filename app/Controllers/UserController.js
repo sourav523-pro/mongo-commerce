@@ -63,7 +63,7 @@ const UserController = () => {
                     accessToken = await bcrypt.hash(user.email, salt),
                     { password, ...userData } = user._doc,
                     randString = Math.random().toString(),
-                    token = accessToken + '-' + user.id + randString
+                    token = accessToken + '-' + user.id + '-' + randString
                 console.log(user._doc)
                 return res.status(200).json({
                     status: true,

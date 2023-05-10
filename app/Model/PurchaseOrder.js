@@ -6,7 +6,7 @@ const PurchaseOrderSchema = new Schema({
         ref: "Users",
         required: [true, 'Please give a user id']
     },
-    vendorId: {
+    vendor: {
         type: Schema.Types.ObjectId,
         ref: "Vendors",
         required: [true, 'Please give a vendor id']
@@ -146,12 +146,6 @@ const PurchaseOrderSchema = new Schema({
     discount: {
         type: Number
     },
-    cgst: {
-        type: Number
-    },
-    sgst: {
-        type: Number
-    },
     paymentMethod: {
         type: String,
         trim: true,
@@ -165,10 +159,10 @@ const PurchaseOrderSchema = new Schema({
     paymentDetails: {
         type: String,
     },
-    orderItem: {
+    orderItems: [{
         type: Schema.Types.ObjectId,
         ref: "PurchaseOrderItems"
-    }
+    }]
 }, {
     timestamps: true
 })

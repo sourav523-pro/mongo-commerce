@@ -21,6 +21,9 @@ const SalesOrderItemSchema = new Schema({
     price: {
         type: String
     },
+    discount: {
+        type: String
+    }
 }, {
     timestamps: true
 })

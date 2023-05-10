@@ -14,7 +14,7 @@ const UserAuth = async (req, res, next) => {
         next()
     }
     else
-        res.status(400).json({
+        res.status(401).json({
             status: false,
             message: 'Invalid access token.',
             data: null

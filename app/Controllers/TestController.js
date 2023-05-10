@@ -8,6 +8,7 @@ import Unit from '../Model/Unit.js'
 
 const TestController = () => {
     const router = Router()
+
     router.get('/bulk-unit', (req, res) => {
         try {
             let url = 'http://localhost:5000/api/unit'
@@ -57,6 +58,76 @@ const TestController = () => {
         }
 
     })
+
+    router.get('/bulk-category', (req, res) => {
+
+        try {
+            let url = 'http://localhost:5000/api/category'
+            let options = {
+                'method': 'POST',
+                'url': url,
+                'headers': {
+                    'Authorization': 'Bearer $2b$10$ga68OwpvZZn3LCn6eW2DlekeVEp3DgLAWi7brcsJt6yEGebq8Qbwq-63503f2e6f6a50df4d11a357',
+                    'Content-Type': 'application/json'
+                },
+                body: {}
+            }
+            const categories = [
+                {
+                    "status": "active",
+                    "name": "Apparel & Accessories"
+                },
+                {
+                    "status": "active",
+                    "name": "Business-to-Business"
+                },
+                {
+                    "status": "active",
+                    "name": "Electronics & Office"
+                },
+                {
+                    "status": "active",
+                    "name": "Health & Beauty"
+                },
+                {
+                    "status": "active",
+                    "name": "Home & Hardware"
+                },
+                {
+                    "status": "active",
+                    "name": "Houseware & Furnishings"
+                },
+                {
+                    "status": "active",
+                    "name": "Luxury Goods"
+                },
+                {
+                    "status": "active",
+                    "name": "Mass Merchant"
+                }
+            ]
+
+            categories.forEach((item) => {
+                options.body = JSON.stringify(item)
+                request(options, function (error, response) {
+                    if (error) throw new Error(error)
+                    console.error(response.body)
+                })
+            })
+            res.status(201).json({
+                status: true,
+                message: "Categories inserted",
+                data: categories
+            })
+        } catch (err) {
+            res.status(500).json({
+                status: false,
+                message: err.message,
+                data: null
+            })
+        }
+    })
+
     return router
 }
 

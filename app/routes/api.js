@@ -1,11 +1,20 @@
 import { Router } from 'express'
-import UserController from '../Controllers/UserController.js'
-import TransactionController from '../Controllers/TransactionController.js'
-import UnitController from '../Controllers/UnitController.js'
-import TestController from '../Controllers/TestController.js'
-import ProductController from '../Controllers/ProductController.js'
+import morgan from 'morgan'
+import {
+    UserController,
+    UnitController,
+    TransactionController,
+    TestController,
+    ProductController,
+    CategoryController,
+    BuyerController,
+    VendorController,
+    SalesOrderController,
+    PurchaseOrderController
+} from '../Controllers/index.js'
 
-const Api = Router();
+const Api = Router()
+Api.use(morgan('tiny'))
 Api.get('/', (req, res) => {
     res.json({
         status: true,
@@ -18,6 +27,11 @@ Api.use('/user', UserController())
 Api.use('/transaction', TransactionController())
 Api.use('/unit', UnitController())
 Api.use('/product', ProductController())
+Api.use('/category', CategoryController())
+Api.use('/buyer', BuyerController())
+Api.use('/vendor', VendorController())
+Api.use('/sales-order', SalesOrderController())
+Api.use('/purchase-order', PurchaseOrderController())
 
-export default Api;
+export default Api
 

@@ -6,7 +6,7 @@ const SalesOrderSchema = new Schema({
         ref: "Users",
         required: [true, 'Please give a user id']
     },
-    buyerId: {
+    buyer: {
         type: Schema.Types.ObjectId,
         ref: "Buyers",
         required: [true, 'Please give a vendor id']
@@ -146,12 +146,6 @@ const SalesOrderSchema = new Schema({
     discount: {
         type: Number
     },
-    cgst: {
-        type: Number
-    },
-    sgst: {
-        type: Number
-    },
     paymentMethod: {
         type: String,
         trim: true,
@@ -165,10 +159,10 @@ const SalesOrderSchema = new Schema({
     paymentDetails: {
         type: String,
     },
-    orderItem: {
+    orderItems: [{
         type: Schema.Types.ObjectId,
         ref: "SalesOrderItems"
-    }
+    }]
 }, {
     timestamps: true
 })

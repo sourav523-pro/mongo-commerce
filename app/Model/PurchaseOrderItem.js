@@ -22,6 +22,9 @@ const PurchaseOrderItemSchema = new Schema({
     price: {
         type: Number
     },
+    discount: {
+        type: String
+    }
 }, {
     timestamps: true
 })

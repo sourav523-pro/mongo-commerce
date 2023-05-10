@@ -60,10 +60,7 @@ const BuyerSchema = new Schema({
         default: 'active',
         required: [true, "Please give a status"]
     },
-    address: {
-        type: [AddressSchema],
-        required: [true, "Please give buyer address"]
-    }
+    address: [AddressSchema]
 
 }, {
     timestamps: true

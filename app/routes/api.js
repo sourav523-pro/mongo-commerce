@@ -1,20 +1,7 @@
 import { Router } from 'express'
-import morgan from 'morgan'
-import {
-    UserController,
-    UnitController,
-    TransactionController,
-    TestController,
-    ProductController,
-    CategoryController,
-    BuyerController,
-    VendorController,
-    SalesOrderController,
-    PurchaseOrderController
-} from '../Controllers/index.js'
-
+import AuthRoutes from './auth.js'
+import UserRoutes from './user.js'
 const Api = Router()
-Api.use(morgan('tiny'))
 Api.get('/', (req, res) => {
     res.json({
         status: true,
@@ -22,16 +9,16 @@ Api.get('/', (req, res) => {
     })
 })
 
-Api.use('/test', TestController())
-Api.use('/user', UserController())
-Api.use('/transaction', TransactionController())
-Api.use('/unit', UnitController())
-Api.use('/product', ProductController())
-Api.use('/category', CategoryController())
-Api.use('/buyer', BuyerController())
-Api.use('/vendor', VendorController())
-Api.use('/sales-order', SalesOrderController())
-Api.use('/purchase-order', PurchaseOrderController())
+Api.use('/auth', AuthRoutes)
+Api.use('/user', UserRoutes)
+// Api.use('/transaction', TransactionController())
+// Api.use('/unit', UnitController())
+// Api.use('/product', ProductController())
+// Api.use('/category', CategoryController())
+// Api.use('/buyer', BuyerController())
+// Api.use('/vendor', VendorController())
+// Api.use('/sales-order', SalesOrderController())
+// Api.use('/purchase-order', PurchaseOrderController())
 
 export default Api
 

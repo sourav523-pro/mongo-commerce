@@ -1,19 +1,34 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import connectDB from "./app/database/db.js";
-import Api from './app/routes/api.js'
+import helmet from "helmet";
+import bodyParser from "body-parser";
+import path from "path";
+import { fileURLToPath } from "url";
+import connectDB from "./app/config/db.js";
+import Api from './app/routes/api.js';
+import morgan from "morgan";
+
 dotenv.config({ path: 'config.env' })
 
-const port = process.env.PORT || 5000
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
 const app = express()
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+app.use(helmet())
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }))
 app.use(cors())
+app.use(morgan("common"))
+app.use(bodyParser.json({ limit: "30mb", extended: true }))
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }))
+app.use("/uploads", express.static(__dirname, "public/uploads"));
 
-connectDB()
+const PORT = process.env.PORT || 5000
 
+/** Routes **/
 app.get('/', (req, res) => {
     res.json({
         status: true,
@@ -22,10 +37,19 @@ app.get('/', (req, res) => {
     })
 })
 
-//user routes
+/** api routes **/
 app.use('/api', Api)
 
-
-app.listen(port, () => {
-    console.log(`Express app running on port ${port}`)
-})
+try {
+    let con = await connectDB()
+    if (con) {
+        console.log(`MongoDB connected: ${process.env.MONGO_DB_USER || ''} `)
+        app.listen(PORT, () => {
+            console.log(`Express app running on port ${PORT}`)
+        })
+    }
+} catch (err) {
+    console.error(`Error: ${err.message}`)
+    console.log(err)
+    process.exit(1)
+}

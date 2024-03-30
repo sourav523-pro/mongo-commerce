@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { body, check } from 'express-validator'
 import User from '../Model/User.js'
 import Validator from '../Validator/Validator.js'
+import { login, register } from '../Controllers/AuthController.js'
 
 const AuthRoutes = () => {
     const routes = Router()

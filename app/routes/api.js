@@ -9,8 +9,8 @@ Api.get('/', (req, res) => {
     })
 })
 
-Api.use('/auth', AuthRoutes)
-Api.use('/user', UserRoutes)
+Api.use('/auth', AuthRoutes())
+Api.use('/user', UserRoutes())
 // Api.use('/transaction', TransactionController())
 // Api.use('/unit', UnitController())
 // Api.use('/product', ProductController())
